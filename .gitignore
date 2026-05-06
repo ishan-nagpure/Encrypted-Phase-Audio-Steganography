@@ -1,3 +1,7 @@
+# Ignore the AES encryption keys
+encryption.key
+*.key
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
