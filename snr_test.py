@@ -3,19 +3,6 @@ import matplotlib.pyplot as plt
 from scipy.io import wavfile
 
 def normalize_audio(arr):
-    """
-    FIX (Critical): Replaced the hardcoded / 32768.0 with dtype-aware normalization.
-
-    The old code did: o_f = o.astype(np.float64) / 32768.0
-    This ONLY works if sample.wav is int16. If it is float32 (range -1 to 1),
-    dividing by 32768 makes o_f values microscopic (~0.00003), while s_f stays
-    in [-1, 1]. The subtraction noise = o_f - s_f becomes approximately -s_f,
-    making p_noise ≈ p_signal and SNR collapses to 0 dB — even if the audio
-    is perfectly steganographic.
-
-    The fix detects the actual dtype and scales accordingly so both arrays
-    always land in the same [-1.0, 1.0] space before comparison.
-    """
     arr_f = arr.astype(np.float64)
     if arr.dtype == np.int16:
         return arr_f / 32768.0
